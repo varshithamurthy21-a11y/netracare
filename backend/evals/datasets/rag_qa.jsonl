@@ -1,0 +1,32 @@
+{"id":"r01","question":"What are your opening hours?","expected":["clinic_info#opening-hours"],"keywords":["monday","saturday"],"answerable":true}
+{"id":"r02","question":"Are you open on Sundays?","expected":["clinic_info#opening-hours"],"keywords":["closed","sunday"],"answerable":true}
+{"id":"r03","question":"Where is NetraCare located?","expected":["clinic_info#location-and-contact"],"keywords":["indiranagar"],"answerable":true}
+{"id":"r04","question":"What is the front desk phone number?","expected":["clinic_info#location-and-contact"],"keywords":["4000"],"answerable":true}
+{"id":"r05","question":"Is there parking at the clinic?","expected":["clinic_info#parking-and-access"],"keywords":["parking"],"answerable":true}
+{"id":"r06","question":"Is the clinic wheelchair accessible?","expected":["clinic_info#parking-and-access"],"keywords":["wheelchair"],"answerable":true}
+{"id":"r07","question":"Which languages do your doctors speak?","expected":["clinic_info#languages-spoken"],"keywords":["kannada"],"answerable":true}
+{"id":"r08","question":"What should I bring to my appointment?","expected":["clinic_info#what-to-bring-to-your-visit"],"keywords":["id","prescriptions"],"answerable":true}
+{"id":"r09","question":"Do you accept UPI?","expected":["clinic_info#payment-methods"],"keywords":["upi"],"answerable":true}
+{"id":"r10","question":"How much is a first consultation?","expected":["costs#consultation-fees"],"keywords":["600"],"answerable":true}
+{"id":"r11","question":"What does an OCT scan cost?","expected":["costs#test-prices"],"keywords":["1500"],"answerable":true}
+{"id":"r12","question":"How much does cataract surgery cost?","expected":["costs#procedure-price-ranges"],"keywords":["25000"],"answerable":true}
+{"id":"r13","question":"Do you take health insurance for cashless treatment?","expected":["costs#insurance-and-cashless-treatment"],"keywords":["cashless"],"answerable":true}
+{"id":"r14","question":"How do I cancel my appointment?","expected":["policies#cancelling-and-rescheduling"],"keywords":["cancel"],"answerable":true}
+{"id":"r15","question":"How many days ahead can I book?","expected":["policies#booking-an-appointment"],"keywords":["14"],"answerable":true}
+{"id":"r16","question":"What happens if I arrive late?","expected":["policies#late-arrival"],"keywords":["15"],"answerable":true}
+{"id":"r17","question":"What counts as a missed appointment?","expected":["policies#missed-appointments"],"keywords":["no-show"],"answerable":true}
+{"id":"r18","question":"How is my waiting time estimated?","expected":["policies#check-in-and-waiting-time"],"keywords":["12"],"answerable":true}
+{"id":"r19","question":"Who sees children for squint?","expected":["doctors#children","procedures#paediatric-eye-assessment","doctor#dr-sneha-kulkarni"],"keywords":["kulkarni"],"answerable":true}
+{"id":"r20","question":"Which doctor does cataract surgery?","expected":["doctor#dr-ananya-rao","procedures#cataract-surgery-consultation"],"keywords":["rao"],"answerable":true}
+{"id":"r21","question":"Do you offer online consultations?","expected":["faq#do-you-offer-online-consultations"],"keywords":["not"],"answerable":true}
+{"id":"r22","question":"What is a visual field test and who performs it?","expected":["procedures#oct-scan-visual-field-test-and-other-diagnostic-tests","procedures#glaucoma-screening"],"keywords":["partner"],"answerable":true}
+{"id":"r23","question":"Do I need a referral to book?","expected":["faq#do-i-need-a-referral"],"keywords":["no"],"answerable":true}
+{"id":"r24","question":"Who is Dr. Meera Iyer?","expected":["doctor#dr-meera-iyer"],"keywords":["glaucoma"],"answerable":true}
+{"id":"r25","question":"Can the front desk book for my mother?","expected":["faq#can-i-book-for-my-child-or-parent"],"keywords":["front desk"],"answerable":true}
+{"id":"r26","question":"Will the assistant give me medical advice?","expected":["policies#what-the-assistant-can-and-cannot-do"],"keywords":["not"],"answerable":true}
+{"id":"u01","question":"Who won the cricket world cup?","expected":[],"keywords":[],"answerable":false}
+{"id":"u02","question":"What is the capital of France?","expected":[],"keywords":[],"answerable":false}
+{"id":"u03","question":"What is the weather like today?","expected":[],"keywords":[],"answerable":false}
+{"id":"u04","question":"Can you recommend a good restaurant nearby?","expected":[],"keywords":[],"answerable":false}
+{"id":"u05","question":"What is the stock price of Apple?","expected":[],"keywords":[],"answerable":false}
+{"id":"u06","question":"Do you have a pharmacy on site?","expected":[],"keywords":[],"answerable":false}

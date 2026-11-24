@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from . import config, facts, services, triage
+from . import assistant, config, facts, services, skills, triage
 from .db import session
 from .security import create_token, decode_token
 from .seed import seed
@@ -296,3 +296,68 @@ def doctor_active(doctor_id: int, body: ActiveIn, user=Depends(current_user), co
 @app.get("/admin/audit")
 def audit(user=Depends(current_user), conn=Depends(db)):
     return services.audit(conn, user)
+
+
+# ---- assistant chat (iterations 3-4) ----------------------------------------
+class ChatIn(BaseModel):
+    message: str
+
+
+class ApproveIn(BaseModel):
+    approve: bool
+
+
+@app.post("/assistant/message")
+def assistant_message(body: ChatIn, user=Depends(current_user), conn=Depends(db)):
+    return assistant.handle_message(conn, user, body.message)
+
+
+@app.post("/assistant/confirm")
+def assistant_confirm(body: ApproveIn, user=Depends(current_user), conn=Depends(db)):
+    return assistant.confirm(conn, user, body.approve)
+
+
+@app.post("/assistant/reset")
+def assistant_reset(user=Depends(current_user), conn=Depends(db)):
+    assistant.reset(conn, user)
+    return {"ok": True}
+
+
+# ---- evals, traces, MCP, skills (iterations 5-6) -------------------------------
+@app.post("/admin/evals/run")
+def evals_run(user=Depends(current_user)):
+    services.require_role(user, "admin")
+    from .evals import runner
+    return runner.run_all()
+
+
+@app.get("/admin/evals/latest")
+def evals_latest(user=Depends(current_user)):
+    services.require_role(user, "admin")
+    from .evals import runner
+    return runner.latest() or {}
+
+
+@app.get("/admin/traces")
+def traces(limit: int = 50, user=Depends(current_user), conn=Depends(db)):
+    services.require_role(user, "admin")
+    rows = [dict(r) for r in conn.execute(
+        "SELECT trace_id,name,user_id,input,output,intent,latency_ms,input_tokens,output_tokens,cost_usd,llm_calls,spans,error,created_at "
+        "FROM traces ORDER BY id DESC LIMIT ?", (min(limit, 200),)).fetchall()]
+    agg = conn.execute("SELECT COUNT(*) n, COALESCE(AVG(latency_ms),0) lat, COALESCE(SUM(cost_usd),0) cost, "
+                       "COALESCE(SUM(input_tokens+output_tokens),0) tok FROM traces").fetchone()
+    return {"summary": {"traces": agg["n"], "avg_latency_ms": round(agg["lat"], 1), "total_cost_usd": round(agg["cost"], 6),
+                        "total_tokens": agg["tok"]}, "traces": rows}
+
+
+@app.get("/admin/mcp/tools")
+def mcp_tools(user=Depends(current_user)):
+    services.require_role(user, "admin")
+    from . import mcp_client
+    return mcp_client.describe_servers()
+
+
+@app.get("/admin/skills")
+def admin_skills(user=Depends(current_user)):
+    services.require_role(user, "admin")
+    return skills.list_skills()

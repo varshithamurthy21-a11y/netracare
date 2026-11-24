@@ -1,0 +1,14 @@
+{"text":"book me with Dr Rao tomorrow at 10am","intent":"book","slots":{"doctor_id":1,"date":"2026-11-26","time":"10:00"}}
+{"text":"I want an appointment next monday afternoon","intent":"book","slots":{"date":"2026-11-30","time_pref":"afternoon"}}
+{"text":"cancel appointment #12","intent":"cancel","slots":{"appointment_id":12}}
+{"text":"reschedule to friday 4:30 pm","intent":"reschedule","slots":{"date":"2026-11-27","time":"16:30"}}
+{"text":"book dr shetty on 28/11 at 3","intent":"book","slots":{"doctor_id":4,"date":"2026-11-28","time":"15:00"}}
+{"text":"what are my upcoming appointments","intent":"my_appointments","slots":{}}
+{"text":"how much is an OCT scan","intent":"lab_info","slots":{}}
+{"text":"book an OCT scan on friday","intent":"lab_book","slots":{"date":"2026-11-27"}}
+{"text":"book on 3 dec at 15:30","intent":"book","slots":{"date":"2026-12-03","time":"15:30"}}
+{"text":"which doctor should I see for dry eyes","intent":"route","slots":{}}
+{"text":"what is your cancellation policy","intent":null,"slots":{}}
+{"text":"book with dr iyer in 3 days morning","intent":"book","slots":{"doctor_id":3,"date":"2026-11-28","time_pref":"morning"}}
+{"text":"can I cancel my appointment?","intent":null,"slots":{}}
+{"text":"what are your opening hours","intent":null,"slots":{}}

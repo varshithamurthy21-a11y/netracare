@@ -59,6 +59,29 @@ CREATE TABLE IF NOT EXISTS audit_log (
     at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT);
+CREATE TABLE IF NOT EXISTS traces (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    trace_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    user_id INTEGER,
+    input TEXT DEFAULT '',
+    output TEXT DEFAULT '',
+    intent TEXT DEFAULT '',
+    latency_ms REAL DEFAULT 0,
+    input_tokens INTEGER DEFAULT 0,
+    output_tokens INTEGER DEFAULT 0,
+    cost_usd REAL DEFAULT 0,
+    llm_calls INTEGER DEFAULT 0,
+    spans TEXT DEFAULT '[]',
+    error TEXT DEFAULT '',
+    run_id TEXT DEFAULT '',
+    created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS agent_sessions (
+    user_id INTEGER PRIMARY KEY,
+    state TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
 """
 
 

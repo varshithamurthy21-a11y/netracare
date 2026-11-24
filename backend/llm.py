@@ -1,10 +1,15 @@
 """Optional LLM access. Returns None when no key / any failure, so callers fall back."""
 import os
+import time
 
 import requests
 
+from . import observability
+
 
 def generate(prompt: str, system: str = "", max_tokens: int = 300) -> str | None:
+    """Call the configured provider. Returns None on no key / any failure (callers fall back)."""
+    t0 = time.perf_counter()
     g_key = os.getenv("GOOGLE_API_KEY")
     if g_key:
         model = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
@@ -20,7 +25,9 @@ def generate(prompt: str, system: str = "", max_tokens: int = 300) -> str | None
                 timeout=20,
             )
             r.raise_for_status()
-            return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+            out = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+            observability.record_llm(model, system + prompt, out, (time.perf_counter() - t0) * 1000)
+            return out
         except Exception:
             pass
     a_key = os.getenv("ANTHROPIC_API_KEY")
@@ -38,7 +45,9 @@ def generate(prompt: str, system: str = "", max_tokens: int = 300) -> str | None
                 timeout=20,
             )
             r.raise_for_status()
-            return r.json()["content"][0]["text"].strip()
+            out = r.json()["content"][0]["text"].strip()
+            observability.record_llm("claude-haiku-5-5", system + prompt, out, (time.perf_counter() - t0) * 1000)
+            return out
         except Exception:
             pass
     return None

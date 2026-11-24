@@ -48,6 +48,12 @@ def _next_open_day(start: dt.date, offset: int) -> dt.date:
 def seed(force: bool = False) -> None:
     init_db()
     with session() as conn:
+        seed_into(conn, force)
+
+
+def seed_into(conn, force: bool = False) -> None:
+    """Insert demo data into any open connection (the evals use an in-memory database)."""
+    if True:
         if conn.execute("SELECT COUNT(*) FROM users").fetchone()[0] and not force:
             return
         stamp = services._stamp()

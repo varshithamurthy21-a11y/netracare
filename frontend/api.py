@@ -17,7 +17,7 @@ class Client:
     def _call(self, method: str, path: str, **kw):
         headers = {"Authorization": f"Bearer {self.token}"} if self.token else {}
         try:
-            r = requests.request(method, BASE + path, headers=headers, timeout=25, **kw)
+            r = requests.request(method, BASE + path, headers=headers, timeout=70, **kw)
         except requests.RequestException:
             raise ApiError("Can't reach the NetraCare server. Start it with:  uvicorn backend.main:app --reload")
         if r.status_code >= 400:

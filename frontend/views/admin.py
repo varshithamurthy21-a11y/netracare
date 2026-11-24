@@ -4,11 +4,13 @@ import streamlit as st
 from .. import ui
 from ..common import client, do, md, safe_get
 
-PAGES = ["📊 Overview", "🩺 Doctors", "👥 People", "🧾 Audit log"]
+PAGES = ["📊 Overview", "🩺 Doctors", "👥 People", "🧾 Audit log", "🧪 Evals & Traces", "🔌 MCP & Skills"]
 
 
 def render(page: str, user: dict) -> None:
-    {"📊 Overview": overview, "🩺 Doctors": doctors, "👥 People": people, "🧾 Audit log": audit}[page](user)
+    from . import admin_ops
+    {"📊 Overview": overview, "🩺 Doctors": doctors, "👥 People": people, "🧾 Audit log": audit,
+     "🧪 Evals & Traces": admin_ops.evals, "🔌 MCP & Skills": admin_ops.mcp_skills}[page](user)
 
 
 def overview(user: dict) -> None:

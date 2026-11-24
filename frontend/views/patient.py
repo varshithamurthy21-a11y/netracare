@@ -6,11 +6,12 @@ from .. import ui
 from ..booking import booking_flow
 from ..common import client, do, goto, md, safe_get
 
-PAGES = ["🏠 Home", "📅 Book a visit", "🗂️ My appointments", "👤 My profile"]
+PAGES = ["🏠 Home", "💬 Ask NetraCare", "📅 Book a visit", "🗂️ My appointments", "👤 My profile"]
 
 
 def render(page: str, user: dict) -> None:
-    {"🏠 Home": home, "📅 Book a visit": book, "🗂️ My appointments": mine, "👤 My profile": profile}[page](user)
+    from . import chat
+    {"🏠 Home": home, "💬 Ask NetraCare": lambda u: chat.render(u), "📅 Book a visit": book, "🗂️ My appointments": mine, "👤 My profile": profile}[page](user)
 
 
 def home(user: dict) -> None:
