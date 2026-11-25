@@ -24,11 +24,11 @@ DOCTORS = [
 ]
 
 STAFF = [
-    ("Admin Aarav", "admin@netracare.demo", "Admin@123", "admin"),
+    ("Admin Varshitha", "admin@netracare.demo", "Admin@123", "admin"),
     ("Front Desk Divya", "desk@netracare.demo", "Desk@123", "frontdesk"),
 ]
 DEMO_PATIENTS = [
-    ("Priya Sharma", "patient@netracare.demo", "Patient@123", "+91 98450 11223"),
+    ("Sameera", "patient@netracare.demo", "Patient@123", "+91 98450 11223"),
     ("Rahul Nair", "rahul@netracare.demo", "Patient@123", "+91 99001 44556"),
     ("Kavya Reddy", "kavya@netracare.demo", "Patient@123", "+91 98860 77889"),
     ("Imran Khan", "imran@netracare.demo", "Patient@123", "+91 97420 33441"),
@@ -45,10 +45,20 @@ def _next_open_day(start: dt.date, offset: int) -> dt.date:
         d += dt.timedelta(days=1)
 
 
+RENAMES = {"patient@netracare.demo": ("Priya Sharma", "Sameera"), "admin@netracare.demo": ("Admin Aarav", "Admin Varshitha")}
+
+
+def apply_renames(conn) -> None:
+    """Rename the demo users in an existing database (safe to run on every start)."""
+    for email, (old, new) in RENAMES.items():
+        conn.execute("UPDATE users SET name=? WHERE email=? AND name=?", (new, email, old))
+
+
 def seed(force: bool = False) -> None:
     init_db()
     with session() as conn:
         seed_into(conn, force)
+        apply_renames(conn)
 
 
 def seed_into(conn, force: bool = False) -> None:
